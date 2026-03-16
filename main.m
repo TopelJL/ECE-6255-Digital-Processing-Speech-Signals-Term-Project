@@ -1,3 +1,11 @@
+% ===============================================
+% ECE 6255 - Digital Processing of Speech Signals
+%       Georgia Institute of Technology
+%                Team 8, main.m
+%
+% Last Modified Date: 3/15/2025
+% ===============================================
+
 clc;
 clear;
 close all;
@@ -23,7 +31,7 @@ end
 x = x / max(abs(x));
 
 % frame settings
-frame_len = round(0.03 * fs);   % 30 ms
+frame_len = round(0.05 * fs);   % 50 ms
 hop_len = round(0.01 * fs);     % 10 ms
 num_frames = floor((length(x) - frame_len) / hop_len) + 1;
 
