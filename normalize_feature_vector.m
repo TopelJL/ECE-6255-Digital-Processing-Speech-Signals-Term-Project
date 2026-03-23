@@ -1,5 +1,5 @@
 function y = normalize_feature_vector(x)
-%NORMALIZE_FEATURE_VECTOR Safely normalize a vector to max absolute value 1.
+%NORMALIZE_FEATURE_VECTOR Scale vector by max absolute value (safe for zeros).
 
     maxVal = max(abs(x));
     if maxVal > 0
