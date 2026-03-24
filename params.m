@@ -1,35 +1,37 @@
 function params = params(fs)
-%PARAMS Centralized parameters for voiced / unvoiced / silence segmentation.
-%
-%   params = params(fs) returns a struct for sampling rate fs (Hz).
-%   Tune fields here or override after the call in main.m.
+% store all parameters used in segmentation
 
-    % --- Framing (20–30 ms frame, ~10 ms hop) ---
-    params.frame_dur_sec = 0.025;   % 25 ms
-    params.hop_dur_sec   = 0.010;   % 10 ms
+    % --- framing settings (about 25 ms frame, 10 ms hop) ---
+    params.frame_dur_sec = 0.025;   % frame length in seconds
+    params.hop_dur_sec   = 0.010;   % hop size in seconds
+
+    % convert to samples
     params.frame_len     = max(1, round(params.frame_dur_sec * fs));
     params.hop_len       = max(1, round(params.hop_dur_sec * fs));
+
+    % window for each frame
     params.window        = hamming(params.frame_len, 'periodic');
 
-    % --- Pitch search (Hz -> lag samples) ---
+    % --- pitch range (convert hz to lag values) ---
     params.min_f0 = 60;
     params.max_f0 = 400;
+
     params.min_lag = max(2, floor(fs / params.max_f0));
     params.max_lag = min(params.frame_len - 1, ceil(fs / params.min_f0));
 
-    % --- Baseline thresholds (used with adaptive scaling below) ---
-    params.silence_energy_quantile   = 12;   % percentile of STE for silence cutoff
-    params.speech_energy_quantile    = 35;   % above this: candidate speech
-    params.voicing_peak_min          = 0.28; % normalized autocorr peak min for voiced
-    params.zcr_voiced_quantile       = 55;   % ZCR below this quantile (speech) -> likelier voiced
-    params.spec_change_th            = 0.18;
+    % --- thresholds (used for classification) ---
+    params.silence_energy_quantile   = 12;   % low energy -> silence
+    params.speech_energy_quantile    = 35;   % higher energy -> speech
+    params.voicing_peak_min          = 0.28; % min autocorr peak for voiced
+    params.zcr_voiced_quantile       = 55;   % lower zcr -> voiced
+    params.spec_change_th            = 0.18; % spectral change threshold
 
-    % --- Smoothing ---
+    % --- smoothing settings ---
     params.median_filter_frames = 5;
-    params.min_segment_frames   = 3;  % min run length after median (merge short islands)
+    params.min_segment_frames   = 3;  % remove very short segments
     params.syllable_smooth_len  = 5;
 
-    % --- Boundary detection (optional higher-level outputs) ---
+    % --- boundary detection settings ---
     params.min_region_frames   = 4;
     params.min_peak_height     = 0.12;
     params.min_word_gap_sec    = 0.15;
