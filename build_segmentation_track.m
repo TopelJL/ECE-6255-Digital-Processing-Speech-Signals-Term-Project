@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                    build_segmentation_track.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function segTrack = build_segmentation_track(signalLength, labels, hopLen)
 % build segmentation track from frame labels to sample-level labels
 

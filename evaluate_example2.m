@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                        evaluate_example.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 % evaluate example2.wav against the provided ground truth csv
 % run this from the repo root
 

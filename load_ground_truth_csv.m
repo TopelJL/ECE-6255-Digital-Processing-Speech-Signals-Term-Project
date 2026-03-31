@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                     load_ground_truth_csv.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function gt = load_ground_truth_csv(csvPath, numFrames)
 % load ground truth labels from csv file
 

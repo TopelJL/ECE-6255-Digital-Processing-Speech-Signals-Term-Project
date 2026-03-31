@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                     evaluate_segmentation.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function metrics = evaluate_segmentation(predLabels, gtLabels)
 % compute accuracy and confusion matrix for segmentation results
 

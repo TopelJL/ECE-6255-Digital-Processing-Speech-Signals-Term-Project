@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                       classify_frames.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function labels = classify_frames(features, p)
 % classify each frame as silence, voiced, or unvoiced using adaptive thresholds
 

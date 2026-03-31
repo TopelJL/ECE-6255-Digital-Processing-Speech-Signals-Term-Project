@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                     local_findpeaks.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function [pks, locs] = local_findpeaks(x, varargin)
 % simple version of findpeaks if toolbox is not available
 

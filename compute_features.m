@@ -1,3 +1,10 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%           
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
 function features = compute_features(x, fs, p)
 % compute frame-level features like ste, zcr, and pitch strength
 

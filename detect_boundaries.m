@@ -1,3 +1,11 @@
+% =================================================================
+%       ECE 6255 Digital Signal Speech Processing Term Project
+%                   Georgia Institute of Technology
+%                        detect_boundaries.m
+% 
+%           Team 8: Jaxon Topel, Adrian Cruz, Michael Ritz
+% =================================================================
+
 function boundaries = detect_boundaries(labels, features, p, fs)
 % detect low-level, phoneme-like, syllable-like, and word-like boundaries
 
@@ -39,15 +47,51 @@ function boundaries = detect_boundaries(labels, features, p, fs)
         % choose peak spacing based on region length
         peakDist = max(1, min(6, floor(length(localEnv) / 2)));
 
-        % find peaks in the smoothed energy
-        if exist('findpeaks', 'file') == 2
-            [~, locs] = findpeaks(localEnv, ...
-                'MinPeakDistance', peakDist, ...
-                'MinPeakHeight', p.min_peak_height);
+        % extract spectral flux for this speech region
+        runFlux = specChange(s1:s2);
+        runFlux = runFlux(:);
+
+        % set adaptive threshold as high percentile of this region's flux
+        thresh = prctile(runFlux(isfinite(runFlux)), 90);
+
+        if isempty(runFlux) || all(~isfinite(runFlux))
+            pks = [];
+            locs = [];
         else
-            [~, locs] = local_findpeaks(localEnv, ...
-                'MinPeakDistance', peakDist, ...
-                'MinPeakHeight', p.min_peak_height);
+            validMask = isfinite(runFlux);
+            runFluxValid = runFlux(validMask);
+
+            if isempty(runFluxValid)
+                pks = [];
+                locs = [];
+            else
+                localMax = max(runFluxValid);
+
+                if ~isfinite(localMax) || localMax <= 0
+                    pks = [];
+                    locs = [];
+                else
+                    % keep threshold from exceeding actual data
+                    thresh = min(thresh, localMax - eps);
+
+                    if thresh <= 0
+                        pks = [];
+                        locs = [];
+                    else
+                        % about 30 ms minimum spacing between peaks
+                        minPeakDistFrames = max(1, round(0.03 / (p.hop_len / fs)));
+
+                        [pksValid, locsValid] = findpeaks(runFluxValid, ...
+                            'MinPeakHeight', thresh, ...
+                            'MinPeakDistance', minPeakDistFrames);
+
+                        % map valid-only indices back to original indices
+                        validIdx = find(validMask);
+                        locs = validIdx(locsValid);
+                        pks  = pksValid;
+                    end
+                end
+            end
         end
 
         % convert local peak locations to full signal frame indices
