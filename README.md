@@ -2,7 +2,7 @@
 
 **Course:** ECE 6255A, Georgia Institute of Technology, Spring 2026  
 **Instructor:** B.H. Juang  
-**Topic:** Speech segmentation — **voiced / unvoiced / silence** (classical DSP, no machine learning)
+**Topic:** Speech segmentation — **voiced / unvoiced / silence**
 
 **Team:** Jaxon Topel, Adrian Cruz, Michael Ritz  
 
